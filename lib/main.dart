@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Tsumeshogi App'),
     );
   }
 }
@@ -41,6 +41,21 @@ class MyHomePage extends StatefulWidget {
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
+}
+
+List<FlatButton> _buildGridCells(int count) {
+  List<FlatButton> cells = List.generate(
+    count,
+    (int index) => FlatButton(
+      onPressed: () {
+        print(index.toString());
+      },
+      color: Colors.yellow,
+      padding: const EdgeInsets.all(3),
+      child: Text("P"),
+    ),
+  );
+  return cells;
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -72,33 +87,49 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(5, 50, 20, 30),
+          color: Colors.greenAccent,
+          width: 455,
+          height: 575,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // 盤面
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                color: Colors.blueAccent,
+                width: 350,
+                height: 390,
+                child: GridView.count(
+                  crossAxisCount: 6, // 横に何個入れるか
+                  crossAxisSpacing: 4.0, // cell間の縦スペース
+                  mainAxisSpacing: 4.0, // cell間の縦スペース
+                  padding: EdgeInsets.all(5.0),
+
+                  childAspectRatio: 3.5 / 3.9,
+                  children: _buildGridCells(36),
+                ),
+              ),
+              //　持ち駒
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                color: Colors.redAccent,
+                width: 350,
+                height: 100,
+                child: GridView.count(
+                  crossAxisCount: 6, // 横に何個入れるか
+                  crossAxisSpacing: 4.0, // cell間の縦スペース
+                  mainAxisSpacing: 4.0, // cell間の縦スペース
+                  padding: EdgeInsets.all(5.0),
+
+                  childAspectRatio: 3.5 / 3.9,
+                  children: _buildGridCells(6),
+                ),
+              ),
+//
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
