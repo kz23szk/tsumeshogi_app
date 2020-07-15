@@ -42,4 +42,15 @@ const kPieceInfo = {
   '+r': {'text': '龍', 'color': Colors.red, 'angle': pi},
 };
 
-const kHandsOrder = ['R', 'B', 'G', 'S', 'N', 'L', 'P'];
+const kSenteHandOrder = ['R', 'B', 'G', 'S', 'N', 'L', 'P'];
+
+// 空の盤面 初期化に利用
+final List<String> kEmptyBoard = List.generate(81, (i) => 'e');
+
+// 空の駒台 初期化に利用
+const kEmptyHands = {
+  // 攻め方の駒
+  'p': 0, 'l': 0, 'n': 0, 's': 0, 'g': 0, 'b': 0, 'r': 0, // 'k': 1, 攻め方玉
+  // 後手の駒
+  'P': 0, 'L': 0, 'N': 0, 'S': 0, 'G': 0, 'B': 0, 'R': 0,
+};

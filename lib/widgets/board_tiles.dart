@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:tsumeshogiapp/models/board_data.dart';
 import 'package:tsumeshogiapp/widgets/piece_tile.dart';
 
-class PiecesList extends StatelessWidget {
+class BoardTiles extends StatelessWidget {
   final Size size;
 
-  PiecesList({this.size});
+  BoardTiles({this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class PiecesList extends StatelessWidget {
           children: List<Widget>.generate(81, (index) {
             final piece = boardData.cell(index);
             return PieceTile(
-              piece: piece,
+              pieceStr: piece,
               tapCallback: () {
-                print("tap ${piece.index}");
+                print("tap $index");
               },
             );
           }),

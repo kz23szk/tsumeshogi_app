@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tsumeshogiapp/models/board_data.dart';
-import 'package:tsumeshogiapp/widgets/pieces_list.dart';
+import 'package:tsumeshogiapp/widgets/board_tiles.dart';
 import 'package:tsumeshogiapp/models/problem.dart';
 import 'package:tsumeshogiapp/widgets/hands_tiles.dart';
 
@@ -31,9 +31,9 @@ class MainScreen extends StatelessWidget {
             children: <Widget>[
               SizedBox(),
               // 盤面
-              PiecesList(size: size),
+              BoardTiles(size: size),
               //　持ち駒
-              HandsTiles(size: size),
+              HandsTiles2(size: size),
             ],
           ),
         ),

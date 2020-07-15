@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
-import 'package:tsumeshogiapp/models/piece.dart';
-import 'package:tsumeshogiapp/widgets/hand_piece_tile.dart';
 import 'package:tsumeshogiapp/constants.dart';
 
 // 盤面情報モデル
 // タップされた情報に基づいて値を更新する
 class BoardData extends ChangeNotifier {
-  List<Piece> _board = List.generate(81, (i) => Piece(index: i));
-  // TODO:持ち駒は盤面の駒と性質が違うので別クラスを用意する
+  //
+  List<String> _board = kEmptyBoard;
   Map<String, int> _hands = {};
 
-  List<Piece> get board => _board;
-  Piece cell(int index) => _board[index];
+  List<String> get board => _board;
+  String cell(int index) => _board[index];
   Map<String, int> get hands => _hands;
 
   int get boardCount => _board.length;
@@ -25,7 +23,7 @@ class BoardData extends ChangeNotifier {
   }
 
   void setBoardFromText(String boardText) {
-    _board = List.generate(81, (i) => Piece(index: i));
+    _board = kEmptyBoard;
 
     List<String> boardChars = boardText.split('');
     RegExp number = RegExp(r'[1-9]');
@@ -42,10 +40,10 @@ class BoardData extends ChangeNotifier {
         index += int.parse(char);
       } else if (string.hasMatch(char)) {
         if (promoteFlag) {
-          _board[index].type = '+$char';
+          _board[index] = '+$char';
           promoteFlag = false;
         } else {
-          _board[index].type = char;
+          _board[index] = char;
         }
         index++;
       }
@@ -54,76 +52,48 @@ class BoardData extends ChangeNotifier {
 
   void setHandsFromText(String handsText) {
     _hands = {
-      // 攻め方の駒
-      'p': 0, 'l': 0, 'n': 0, 's': 0, 'g': 0, 'b': 0, 'r': 0, // 'k': 1, 攻め方玉
-      // 後手の駒
+      // 先手の駒
       'P': 0, 'L': 0, 'N': 0, 'S': 0, 'G': 0, 'B': 0, 'R': 0,
+      // 後手の駒
+      'p': 0, 'l': 0, 'n': 0, 's': 0, 'g': 0, 'b': 0, 'r': 0,
     };
     List<String> handsChars = handsText.split('');
     RegExp number = RegExp(r'[1-9]');
 
-    int tempCount = 1;
-    for (String char in handsChars) {
-      if (number.hasMatch(char)) {
-        tempCount = int.parse(char);
+    for (int i = 0; i < handsChars.length; i++) {
+      if (number.hasMatch(handsChars[i])) {
+        // 10枚以上持っているとき
+        if (number.hasMatch(handsChars[i + 1])) {
+          _hands[handsChars[i + 2]] =
+              int.parse(handsChars[i]) * 10 + int.parse(handsChars[i + 1]);
+          i += 2;
+        } else {
+          _hands[handsChars[i + 1]] = int.parse(handsChars[i]);
+          i++;
+        }
       } else {
-        _hands[char] = tempCount;
-        tempCount = 1;
+        print(handsChars[i]);
+        _hands[handsChars[i]] = 1;
       }
     }
+    print(_hands);
   }
 
-  // 6マス分の持ち駒タイルを返す
-  List<HandPieceTile> getHandsTiles() {
-    List<HandPieceTile> handsTiles = [];
+  // 持ち駒情報を返す
+  // ex)金２枚歩1枚なら金金歩
+  List<String> handsStrList() {
+    List<String> handsStrList = [];
 
-    for (String handType in kHandsOrder) {
-      if (_hands.containsKey(handType)) {
-        handsTiles.addAll(
-          List.generate(
-            _hands[handType],
-            (i) => HandPieceTile(
-              piece: Piece(
-                type: handType,
-              ),
-              tapCallback: () {
-                print("tap $i");
-              },
-            ),
-          ),
-        );
+    for (String type in kSenteHandOrder) {
+      for (int i = 0; i < _hands[type]; i++) {
+        handsStrList.add(type);
       }
     }
-
-    if (handsTiles.length >= 6) {
-      return handsTiles.getRange(0, 6);
-    }
-
-    handsTiles.addAll(
-      List.generate(
-        6 - handsTiles.length,
-        (i) => HandPieceTile(
-          piece: Piece(
-            type: 'e',
-          ),
-          tapCallback: () {
-            print("tap $i");
-          },
-        ),
-      ),
-    );
-    return handsTiles;
+    return handsStrList;
   }
 
   void tapBoardCell(index) {
-    print("TAP");
-//    if (_board[index].hold) {
-//      _board[index].hold = false;
-//      _board[index].type = "r";
-//    } else {
-//      _board[index].hold = true;
-//      _board[index].type = "+r";
-//    }
+    print("TAP $index");
     notifyListeners();
   }
 }

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tsumeshogiapp/models/piece.dart';
 import 'package:tsumeshogiapp/constants.dart';
 
 class PieceTile extends StatelessWidget {
-  final Piece piece;
+  final String pieceStr;
   final Function tapCallback;
 
   PieceTile({
-    this.piece,
+    this.pieceStr,
     this.tapCallback,
   });
 
   @override
   Widget build(BuildContext context) {
-    final pieceType = piece.type;
+    final pieceType = pieceStr;
     return FlatButton(
       // ボタンを押したときの挙動
       onPressed: tapCallback,
