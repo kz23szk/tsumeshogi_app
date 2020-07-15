@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:tsumeshogiapp/models/piece.dart';
+import 'package:tsumeshogiapp/widgets/hand_piece_tile.dart';
+import 'package:tsumeshogiapp/constants.dart';
 
 // 盤面情報モデル
 // タップされた情報に基づいて値を更新する
 class BoardData extends ChangeNotifier {
   List<Piece> _board = List.generate(81, (i) => Piece(index: i));
   // TODO:持ち駒は盤面の駒と性質が違うので別クラスを用意する
-  Map<String, int> _hands;
+  Map<String, int> _hands = {};
 
   List<Piece> get board => _board;
   Piece cell(int index) => _board[index];
@@ -19,7 +21,7 @@ class BoardData extends ChangeNotifier {
     setBoardFromText(boardList[0]);
     setHandsFromText(boardList[1]);
 
-    notifyListeners();
+    //notifyListeners();
   }
 
   void setBoardFromText(String boardText) {
@@ -69,6 +71,48 @@ class BoardData extends ChangeNotifier {
         tempCount = 1;
       }
     }
+  }
+
+  // 6マス分の持ち駒タイルを返す
+  List<HandPieceTile> getHandsTiles() {
+    List<HandPieceTile> handsTiles = [];
+
+    for (String handType in kHandsOrder) {
+      if (_hands.containsKey(handType)) {
+        handsTiles.addAll(
+          List.generate(
+            _hands[handType],
+            (i) => HandPieceTile(
+              piece: Piece(
+                type: handType,
+              ),
+              tapCallback: () {
+                print("tap $i");
+              },
+            ),
+          ),
+        );
+      }
+    }
+
+    if (handsTiles.length >= 6) {
+      return handsTiles.getRange(0, 6);
+    }
+
+    handsTiles.addAll(
+      List.generate(
+        6 - handsTiles.length,
+        (i) => HandPieceTile(
+          piece: Piece(
+            type: 'e',
+          ),
+          tapCallback: () {
+            print("tap $i");
+          },
+        ),
+      ),
+    );
+    return handsTiles;
   }
 
   void tapBoardCell(index) {

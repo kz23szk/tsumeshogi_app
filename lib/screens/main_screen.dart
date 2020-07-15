@@ -3,11 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:tsumeshogiapp/models/board_data.dart';
 import 'package:tsumeshogiapp/widgets/pieces_list.dart';
 import 'package:tsumeshogiapp/models/problem.dart';
+import 'package:tsumeshogiapp/widgets/hands_tiles.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    Problem p = Problem();
+    Provider.of<BoardData>(context).setBoardInfoFromText(p.problemText);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,22 +33,7 @@ class MainScreen extends StatelessWidget {
               // 盤面
               PiecesList(size: size),
               //　持ち駒
-//              Container(
-//                margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-//                color: Colors.redAccent,
-//                width: 350,
-//                height: 100,
-//                child: GridView.count(
-//                  crossAxisCount: 6, // 横に何個入れるか
-//                  crossAxisSpacing: 4.0, // cell間の縦スペース
-//                  mainAxisSpacing: 4.0, // cell間の縦スペース
-//                  padding: EdgeInsets.all(5.0),
-//
-//                  childAspectRatio: 3.5 / 3.9,
-//                  children: _buildHandCells(context),
-//                ),
-//              ),
-//
+              HandsTiles(size: size),
             ],
           ),
         ),
@@ -54,7 +42,9 @@ class MainScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Problem p = Problem();
-          Provider.of<BoardData>(context).setBoardInfoFromText(p.problemText);
+          Provider.of<BoardData>(context, listen: false)
+              .setBoardInfoFromText(p.problemText);
+          print(Provider.of<BoardData>(context, listen: false).hands);
         },
         tooltip: 'Increment',
         child: Icon(Icons.check_circle),
@@ -62,56 +52,3 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
-
-//const HAND = 0;
-//const BOARD = 1;
-//
-//List<FlatButton> _buildBoardCells(BuildContext context) {
-//  //final master = Provider.of<BoardMaster>(context, listen: true);
-//
-//  List<FlatButton> cells =
-//      List.generate(36, (int index) => _buildBoardCell(index, context));
-//  return cells;
-//}
-
-//FlatButton _buildBoardCell(index, BuildContext context) {
-//  final m = Provider.of<BoardMaster>(context, listen: true);
-//
-//  return FlatButton(
-//    // ボタンを押したときの挙動
-//    onPressed: () {
-//      print(m.board[index].index);
-//      m.tapBoardCell(index);
-//    },
-//    color: getCellColor(m.board[index]),
-//    padding: const EdgeInsets.all(3),
-//    child: Center(
-//        child: Transform.rotate(
-//      angle: pieceRotateMap[m.board[index].piece],
-//      child: pieceText(m.board[index]),
-//    )),
-//  );
-//}
-//
-//List<FlatButton> _buildHandCells(BuildContext context) {
-//  List<FlatButton> cells =
-//      List.generate(6, (int index) => _buildHandCell(index, context));
-//  return cells;
-//}
-
-//FlatButton _buildHandCell(int index, BuildContext context) {
-//  final m = Provider.of<BoardMaster>(context, listen: true);
-//
-//  FlatButton cell = FlatButton(
-//    // ボタンを押したときの挙動
-//    onPressed: () {
-//      print(index);
-//      m.tapHandCell(index);
-//    },
-//    color: getCellColor(m.hand[index]), // 変える
-//    padding: const EdgeInsets.all(3),
-//    child: Center(child: pieceText(m.hand[index])),
-//  );
-//
-//  return cell;
-//}

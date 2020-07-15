@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tsumeshogiapp/models/piece.dart';
 import 'package:tsumeshogiapp/constants.dart';
 
-class PieceTile extends StatelessWidget {
+class HandPieceTile extends StatelessWidget {
   final Piece piece;
   final Function tapCallback;
 
-  PieceTile({
+  HandPieceTile({
     this.piece,
     this.tapCallback,
   });
