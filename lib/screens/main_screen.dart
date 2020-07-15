@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tsumeshogiapp/models/board_data.dart';
 import 'package:tsumeshogiapp/widgets/pieces_list.dart';
+import 'package:tsumeshogiapp/models/problem.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -48,10 +50,14 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ),
+      // 答えや解説を表示する
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Problem p = Problem();
+          Provider.of<BoardData>(context).setBoardInfoFromText(p.problemText);
+        },
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.check_circle),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
@@ -108,23 +114,4 @@ class MainScreen extends StatelessWidget {
 //  );
 //
 //  return cell;
-//}
-
-//Text pieceText(Cell c) {
-//  return Text(pieceTextMap[c.piece],
-//      textAlign: TextAlign.center,
-//      style: TextStyle(
-//        color: pieceColorMap[c.piece],
-//        fontSize: 35,
-//      ));
-//}
-
-//Color getCellColor(Cell c) {
-//  if (c.isHold) {
-//    return Colors.greenAccent;
-//  } else if (c.isControlled) {
-//    return Colors.yellow;
-//  } else {
-//    return Colors.white;
-//  }
 //}

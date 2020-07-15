@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/main_screen.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'package:tsumeshogiapp/models/board_data.dart';
 
 void main() => runApp(TsumeshogiApp());
