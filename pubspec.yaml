@@ -36,6 +36,6 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: roundedMplus
+    - family: Mamelon
       fonts:
-        - asset: fonts/rounded-mplus-1p-thin.ttf
+        - asset: fonts/Mamelon.otf

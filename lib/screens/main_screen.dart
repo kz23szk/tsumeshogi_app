@@ -4,6 +4,7 @@ import 'package:tsumeshogiapp/models/board_data.dart';
 import 'package:tsumeshogiapp/widgets/board_tiles.dart';
 import 'package:tsumeshogiapp/models/problem.dart';
 import 'package:tsumeshogiapp/widgets/hands_tiles.dart';
+import 'package:tsumeshogiapp/constants.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -23,13 +24,15 @@ class MainScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          color: Colors.greenAccent,
+          color: kColors['blue'],
           width: size.width,
           height: size.height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(),
+              SizedBox(
+                height: 100,
+              ),
               // 盤面
               BoardTiles(size: size),
               //　持ち駒

@@ -88,9 +88,9 @@ class HandsTiles2 extends StatelessWidget {
       Map<String, int> handMap = boardData.hands;
       return Container(
         margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-        color: Colors.redAccent,
+        color: kColors['blue'],
         width: size.width * 7 / 9,
-        height: 100,
+        height: size.width / 9,
         child: GridView.count(
           crossAxisCount: 7,
           // 横に何個入れるか
@@ -100,41 +100,61 @@ class HandsTiles2 extends StatelessWidget {
           // cell間の縦スペース
           padding: EdgeInsets.all(5.0),
 
-          childAspectRatio: 3.5 / 3.9,
+          //childAspectRatio: 3.5 / 3.9,
           children: List.generate(kSenteHandOrder.length,
-              (int index) => _buildHandCell2(index, handMap)),
+              (int index) => _buildHandCell2(index, handMap, size)),
         ),
       );
     });
   }
 }
 
-FlatButton _buildHandCell2(int index, Map<String, int> handMap) {
+Widget _buildHandCell2(int index, Map<String, int> handMap, Size size) {
   String type = kSenteHandOrder[index];
-  return FlatButton(
-    // ボタンを押したときの挙動
-    onPressed: () {
-      print(index);
-    },
-    color: Colors.white, // 変える
-    padding: const EdgeInsets.all(3),
-    child: Center(child: pieceTexts(type, handMap[type])),
-  );
+
+  Color stringColor = handMap[type] > 0 ? kColors['black'] : kColors['white'];
+
+  return Stack(children: [
+    FlatButton(
+      onPressed: () => print("PUSH"),
+      color: kColors['gray'],
+      //padding: const EdgeInsets.all(3),
+      child: Text(
+        kPieceInfo[type]['text'],
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: stringColor,
+          fontSize: 25,
+        ),
+      ),
+    ),
+    Align(
+      alignment: Alignment(0.9, 1),
+      child: Text(
+        handMap[type].toString(),
+        style: TextStyle(
+          color: stringColor,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ]);
 }
 
-Text pieceTexts(String type, int count) {
-  if (count > 0) {
-    return Text(kPieceInfo[type]['text'],
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: kPieceInfo[type]['color'],
-          fontSize: 25,
-        ));
-  } else {
-    return Text("",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.white,
-        ));
-  }
-}
+//Text pieceTexts(String type, int count) {
+//  if (count > 0) {
+//    return Text(kPieceInfo[type]['text'],
+//        textAlign: TextAlign.center,
+//        style: TextStyle(
+//          color: kPieceInfo[type]['color'],
+//          fontSize: 25,
+//        ));
+//  } else {
+//    return Text("",
+//        textAlign: TextAlign.center,
+//        style: TextStyle(
+//          color: Colors.white,
+//        ));
+//  }
+//}

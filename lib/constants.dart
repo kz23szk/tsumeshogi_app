@@ -42,6 +42,16 @@ const kPieceInfo = {
   '+r': {'text': '龍', 'color': Colors.red, 'angle': pi},
 };
 
+const kColors = {
+  'white': Color(0xFFf7f3e9), // 象牙
+  'blue': Color(0xFF7eb7c7),
+  'green': Color(0xFF7eb7c7), // 萌黄
+  'yellow': Color(0xFFffdf4f), //支子
+  'red': Color(0xFF7eb7c7), // 朱色
+  'gray': Color(0xFFc5ccc9),
+  'black': Color(0xFF2f2725),
+};
+
 const kSenteHandOrder = ['R', 'B', 'G', 'S', 'N', 'L', 'P'];
 
 // 空の盤面 初期化に利用

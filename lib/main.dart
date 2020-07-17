@@ -23,7 +23,7 @@ class TsumeshogiApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.green,
-            //fontFamily: 'roundedMplus',
+            fontFamily: 'Mamelon',
           ),
           home: MainScreen(),
         ));

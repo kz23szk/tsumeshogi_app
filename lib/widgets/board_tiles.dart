@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tsumeshogiapp/models/board_data.dart';
 import 'package:tsumeshogiapp/widgets/piece_tile.dart';
+import 'package:tsumeshogiapp/constants.dart';
 
 class BoardTiles extends StatelessWidget {
   final Size size;
@@ -13,7 +14,7 @@ class BoardTiles extends StatelessWidget {
     return Consumer<BoardData>(builder: (context, boardData, child) {
       return Container(
         //margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-        color: Colors.blueAccent,
+        color: kColors['blue'],
         width: size.width,
         height: size.width,
         child: GridView.count(
